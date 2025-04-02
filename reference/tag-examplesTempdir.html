@@ -97,8 +97,10 @@ package dependencies and configure roxygen2 to use the <code>rocleteer</code>:</
 <p>In your <code>DESCRIPTION</code> file:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>Suggests<span class="sc">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>    rocleteer</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>Roxygen<span class="sc">:</span> <span class="fu">list</span>(<span class="at">roclets =</span> <span class="fu">c</span>(<span class="st">"namespace"</span>, <span class="st">"rd"</span>, <span class="st">"rocleteer"</span>))</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>Remotes<span class="sc">:</span> coatless<span class="sc">-</span>rpkg<span class="sc">/</span>rocleteer</span></code></pre><p></p></div>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>Remotes<span class="sc">:</span> coatless<span class="sc">-</span>rpkg<span class="sc">/</span>rocleteer</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>Roxygen<span class="sc">:</span> <span class="fu">list</span>(..., <span class="at">packages =</span> <span class="fu">c</span>(<span class="st">"rocleteer"</span>))</span></code></pre><p></p></div>
+<p>where <code>...</code> could be <code>roclets = c("collate", "namespace", "rd")</code>.</p>
     </div>
 
     <div class="section level2">
