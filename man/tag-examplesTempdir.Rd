@@ -59,9 +59,12 @@ In your \code{DESCRIPTION} file:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{Suggests:
     rocleteer
-Roxygen: list(roclets = c("namespace", "rd", "rocleteer"))
 Remotes: coatless-rpkg/rocleteer
+
+Roxygen: list(..., packages = c("rocleteer"))
 }\if{html}{\out{</div>}}
+
+where \code{...} could be \code{roclets = c("collate", "namespace", "rd")}.
 }
 
 \examples{

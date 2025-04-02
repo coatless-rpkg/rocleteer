@@ -46,10 +46,13 @@
 #' ```
 #' Suggests:
 #'     rocleteer
-#' Roxygen: list(roclets = c("namespace", "rd", "rocleteer"))
 #' Remotes: coatless-rpkg/rocleteer
+#' 
+#' Roxygen: list(..., packages = c("rocleteer"))
 #' ```
-#'
+#' 
+#' where `...` could be `roclets = c("collate", "namespace", "rd")`.
+#' 
 #' @name tag-examplesTempdir
 #'
 #' @usage

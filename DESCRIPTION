@@ -10,7 +10,7 @@ Authors@R: c(
   )
 Description: Provides extensions to the roxygen2 documentation system. The
    exact extensions are still being added.
-URL: http://r-pkg.thecoatlessprofessor.com/rocleteer/, https://github.com/coatless-rpkg/rocleteer
+URL: https://r-pkg.thecoatlessprofessor.com/rocleteer/, https://github.com/coatless-rpkg/rocleteer
 BugReports: https://github.com/coatless-rpkg/rocleteer/issues
 License: AGPL (>= 3)
 Imports: 

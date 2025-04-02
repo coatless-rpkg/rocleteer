@@ -11,7 +11,7 @@ Provides extensions to the roxygen2 documentation system. The exact extensions a
 \seealso{
 Useful links:
 \itemize{
-  \item \url{http://r-pkg.thecoatlessprofessor.com/rocleteer/}
+  \item \url{https://r-pkg.thecoatlessprofessor.com/rocleteer/}
   \item \url{https://github.com/coatless-rpkg/rocleteer}
   \item Report bugs at \url{https://github.com/coatless-rpkg/rocleteer/issues}
 }
