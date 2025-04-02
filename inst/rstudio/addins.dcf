@@ -1,0 +1,4 @@
+Name: Insert examplesTempdir
+Description: Insert a template for examples that run in a temporary working directory
+Binding: insert_examplesTempdir_template
+Interactive: false
