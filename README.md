@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/coatless-rpkg/rocleteer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/coatless-rpkg/rocleteer/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/coatless-rpkg/rocleteer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/coatless-rpkg/rocleteer/actions/workflows/R-CMD-check.yaml)![Active](https://img.shields.io/badge/Status-Active-green)![Experimental](https://img.shields.io/badge/Status-Experimental-blue)
 <!-- badges: end -->
 
 A roxygen2 extension collection package.
@@ -21,8 +21,9 @@ devtools::install_github("coatless-rpkg/rocleteer")
 
 ## Usage
 
-In your package’s `DESCRIPTION` file, add `{rocleteer}` to your Suggests
-and `coatless-rpkg/rocleteer` to your Remotes:
+In your package’s `DESCRIPTION` file, add `{rocleteer}` to your
+Suggests, `coatless-rpkg/rocleteer` to your Remotes, and include
+`rocletter` in your Roxygen `list` of packages.
 
     Suggests:
         rocleteer
@@ -30,7 +31,7 @@ and `coatless-rpkg/rocleteer` to your Remotes:
     Remotes:
       coatless-rpkg/rocleteer
 
-    Roxygen: Roxygen: list(..., packages = c("rocleteer"))
+    Roxygen: list(..., packages = c("rocleteer"))
 
 where `...` could be `roclets = c("collate", "namespace", "rd")`.
 
