@@ -1,10 +1,19 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 # rocleteer
 
 <!-- badges: start -->
-
 [![R-CMD-check](https://github.com/coatless-rpkg/rocleteer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/coatless-rpkg/rocleteer/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -14,37 +23,38 @@ A roxygen2 extension collection package.
 
 You can install the development version of `{rocleteer}` from GitHub:
 
-``` r
+```r
 # install.packages("devtools")
 devtools::install_github("coatless-rpkg/rocleteer")
 ```
 
 ## Usage
 
-In your package’s `DESCRIPTION` file, add `{rocleteer}` to your Suggests
-and `coatless-rpkg/rocleteer` to your Remotes:
+In your package's `DESCRIPTION` file, add `{rocleteer}` to your Suggests and 
+`coatless-rpkg/rocleteer` to your Remotes:
 
-    Suggests:
-        rocleteer
+```
+Suggests:
+    rocleteer
 
-    Remotes:
-      coatless-rpkg/rocleteer
+Remotes:
+  coatless-rpkg/rocleteer
 
-    Roxygen: Roxygen: list(..., packages = c("rocleteer"))
+Roxygen: Roxygen: list(..., packages = c("rocleteer"))
+```
 
 where `...` could be `roclets = c("collate", "namespace", "rd")`.
 
 ### `@examplesTempdir`
 
 When writing examples for R package functions, you often need to create
-temporary files or directories. To avoid cluttering the user’s
-workspace, it’s good practice to use a temporary directory for these
-examples.
+temporary files or directories. To avoid cluttering the user's workspace, it's 
+good practice to use a temporary directory for these examples.
 
-Traditionally, you would need to manually set up and switch out of the
-temporary directory like this:
+Traditionally, you would need to manually set up and switch out of the temporary
+directory like this:
 
-``` r
+```r
 #' @examples
 #' \dontshow{.old_wd <- setwd(tempdir())}
 #'
@@ -53,18 +63,17 @@ temporary directory like this:
 #' \dontshow{setwd(.old_wd)}
 ```
 
-With `{rocleteer}`, you can simply use the `@examplesTempdir` tag
-instead:
+With `{rocleteer}`, you can simply use the `@examplesTempdir` tag instead:
 
-``` r
+```r
 #' @examplesTempdir
 #' # Your code here
 ```
 
-The `@examplesTempdir` tag handles this automatically. So, if you have a
-function like this:
+The `@examplesTempdir` tag handles this automatically. So, if you have a function
+like this:
 
-``` r
+```r
 #' Example function
 #'
 #' @examplesTempdir
@@ -81,7 +90,7 @@ example_function <- function() {
 
 The documentation will be processed by roxygen2 as:
 
-``` r
+```r
 #' Example function
 #'
 #' @examples
@@ -103,12 +112,11 @@ example_function <- function() {
 }
 ```
 
-> \[!NOTE\]
+
+> [!NOTE]
 >
-> This roclet is inspired by [an old post of
-> mine](https://blog.thecoatlessprofessor.com/programming/r/hiding-tempdir-and-tempfile-statements-in-r-documentation/)
-> that I initially shared in 2018 covering this pattern.
+> This roclet is inspired by [an old post of mine](https://blog.thecoatlessprofessor.com/programming/r/hiding-tempdir-and-tempfile-statements-in-r-documentation/) that I initially shared in 2018 covering this pattern. 
 
 ## License
 
-AGPL (\>=3)
+AGPL (>=3)
