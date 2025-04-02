@@ -62,14 +62,14 @@
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>In your package’s <code>DESCRIPTION</code> file, add <a href="http://r-pkg.thecoatlessprofessor.com/rocleteer/" class="external-link">rocleteer</a> to your Suggests and <code>coatless-rpkg/rocleteer</code> to your Remotes:</p>
+<p>In your package’s <code>DESCRIPTION</code> file, add <a href="http://r-pkg.thecoatlessprofessor.com/rocleteer/" class="external-link">rocleteer</a> to your Suggests, <code>coatless-rpkg/rocleteer</code> to your Remotes, and include <code>rocletter</code> in your Roxygen <code>list</code> of packages.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>Suggests<span class="sc">:</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    rocleteer</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>Remotes<span class="sc">:</span></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  coatless<span class="sc">-</span>rpkg<span class="sc">/</span>rocleteer</span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>Roxygen<span class="sc">:</span> Roxygen<span class="sc">:</span> <span class="fu">list</span>(..., <span class="at">packages =</span> <span class="fu">c</span>(<span class="st">"rocleteer"</span>))</span></code></pre></div>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>Roxygen<span class="sc">:</span> <span class="fu">list</span>(..., <span class="at">packages =</span> <span class="fu">c</span>(<span class="st">"rocleteer"</span>))</span></code></pre></div>
 <p>where <code>...</code> could be <code>roclets = c("collate", "namespace", "rd")</code>.</p>
 <div class="section level3">
 <h3 id="examplestempdir">
