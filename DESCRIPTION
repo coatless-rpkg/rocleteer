@@ -1,0 +1,24 @@
+Package: rocleteer
+Title: Extra Roclets for roxygen2
+Version: 0.1.0
+Authors@R: c(
+    person("James Joseph", "Balamuta",
+           email = "james.balamuta@gmail.com", 
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-2826-8458")
+    )
+  )
+Description: Provides extensions to the roxygen2 documentation system. The
+   exact extensions are still being added.
+URL: http://r-pkg.thecoatlessprofessor.com/rocleteer/, https://github.com/coatless-rpkg/rocleteer
+BugReports: https://github.com/coatless-rpkg/rocleteer/issues
+License: AGPL (>= 3)
+Imports: 
+    roxygen2
+Suggests:
+    rstudioapi,
+    testthat (>= 3.0.0)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Config/testthat/edition: 3
