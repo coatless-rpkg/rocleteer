@@ -323,7 +323,7 @@ webr_repl_iframe <- function(encoded_code, version = "latest", height = 300) {
   url <- webr_repl_href(encoded_code, version)
   html <- paste0(
     '<iframe src="', url, '" ',
-    'width="100%" height="', height, 'px" ',
+    'width="100\\%" height="', height, 'px" ',
     'style="border: 1px solid #ddd; border-radius: 4px; margin-top: 10px;" ',
     'title="webR REPL">',
     '</iframe>'
