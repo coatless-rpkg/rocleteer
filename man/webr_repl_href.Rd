@@ -4,17 +4,21 @@
 \alias{webr_repl_href}
 \title{Generate webR REPL link}
 \usage{
-webr_repl_href(encoded_code, version = "latest")
+webr_repl_href(encoded_code, version = "latest", mode = "", channel = "")
 }
 \arguments{
-\item{encoded_code}{Base64 encoded R code}
+\item{encoded_code}{Base64 encoded code with flags}
 
-\item{version}{webR version (default: "latest")}
+\item{version}{webR version (e.g. "latest", "v0.5.4"). Default: \code{"latest"}}
+
+\item{mode}{webR interface mode (e.g., "editor-plot-terminal-files"). Default: \code{""}}
+
+\item{channel}{webR channel (e.g., "Automatic"). Default: \code{""}}
 }
 \value{
 A URL string for the webR REPL
 }
 \description{
-Create a webR REPL link for the given encoded code
+Create a webR URL with version, mode, channel, and encoded code
 }
 \keyword{internal}

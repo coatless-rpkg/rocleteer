@@ -9,9 +9,13 @@
 #'
 #' @examplesWebR embed
 #' # Your example code with embedded webR iframe
-
+#'
 #' @examplesWebR embed version=v0.5.4 height=400
 #' # Your example code with embedded webR iframe with height 400 set to version 0.5.4
+#'
+#' @examplesWebR embed=false autorun mode=editor-plot
+#' # Your example code with custom configuration overriding global settings
+#'
 }
 \description{
 When roxygen2 processes your documentation, the \verb{@examplesWebR} tag generates
@@ -30,7 +34,11 @@ When the \verb{@examplesWebR} tag is processed, it creates:
 \item A \code{"WebR"} section containing format-appropriate webR integration link
 }
 
-The webR URL format is: \verb{https://webr.r-wasm.org/\{version\}/#code=\{encoded_code\}&ju}
+The webR URL format is:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{https://webr.r-wasm.org/\{version\}/?mode=\{mode\}&channel=\{channel\}#code=\{encoded_code\}&ju\{a\}
+}\if{html}{\out{</div>}}
+
 where the code is JSON-encoded and uncompressed.
 }
 
@@ -75,13 +83,43 @@ The webR integration adapts to different documentation formats:
 \section{Parameters}{
 
 
-The tag supports optional parameters:
+The tag supports optional parameters (these override global \code{DESCRIPTION} config):
 \itemize{
 \item \verb{@examplesWebR}: Default behavior (link in WebR section)
 \item \verb{@examplesWebR embed}: Embed iframe instead of link
-\item \verb{@examplesWebR version=v0.5.4}: Specify webR version greater than or equal to 0.5.4 (default: \code{latest})
-\item \verb{@examplesWebR height=400}: Set iframe height in pixels (default: \code{300})
+\itemize{
+\item \verb{@examplesWebR embed=false} - Explicitly disable embedding (override global config)
 }
+\item \verb{@examplesWebR version=v0.5.4}: Specify webR version greater than or equal to 0.5.4 (default: \code{latest})
+\item \verb{@examplesWebR height=500}: Set iframe height in pixels (default: \code{400})
+\item \verb{@examplesWebR autorun} - Enable autorun on webR session open
+\itemize{
+\item \verb{@examplesWebR autorun=false} - Explicitly disable autorun (override global config)
+}
+\item \verb{@examplesWebR mode=editor-plot} - Configure embedded webR interface (editor, plot, terminal, files) (default: \code{"editor-plot-terminal"})
+\item \verb{@examplesWebR channel=Automatic} - Set webR communication channel (default: \verb{"Automatic})
+}
+
+\strong{Version Requirements}: The version parameter must be either \code{"latest"} or a
+version string \code{v0.5.4} or higher. Earlier versions are not supported
+as the embedding feature is new.
+
+\strong{Mode Options}: Valid mode components are \code{editor}, \code{plot}, \code{terminal}, and \code{files}.
+Combine multiple components with hyphens (e.g., \code{editor-plot-terminal}).
+}
+
+\section{Global Configuration}{
+
+
+You can set global defaults for tags in your package's \code{DESCRIPTION} file:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{Config/rocleteer/webr-embed: false
+Config/rocleteer/webr-height: 500  
+Config/rocleteer/webr-version: v0.5.4
+Config/rocleteer/webr-autorun: true
+Config/rocleteer/webr-mode: editor-plot
+Config/rocleteer/webr-channel: Automatic
+}\if{html}{\out{</div>}}
 }
 
 \section{Package Configuration}{
@@ -96,6 +134,41 @@ In your \code{DESCRIPTION} file:
 Remotes: coatless-rpkg/rocleteer
 
 Roxygen: list(..., packages = c("rocleteer"))
+}\if{html}{\out{</div>}}
+
+You will also need to specify a location where we can obtain the webR
+compiled package in \code{DESCRIPTION}. This will usually be a GitHub Pages URL
+or an R-universe URL. The recommended way is to use the
+\code{Config/rocleteer/webr-repo} field in your \code{DESCRIPTION} file:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{Config/rocleteer/webr-repo: https://user.github.io/pkgname/
+}\if{html}{\out{</div>}}
+
+Alternatively, you can use the \code{URL} field in your \code{DESCRIPTION} file to
+specify the repository URL. The tag will attempt to auto-detect the
+repository URL from the \code{URL} field if the \code{Config/rocleteer/webr-repo} field
+is not set. The tag will look for:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{URL: https://user.github.io/pkgname/, https://github.com/user/pkgname
+}\if{html}{\out{</div>}}
+
+or
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{URL: https://username.r-universe.dev
+}\if{html}{\out{</div>}}
+
+If we cannot find a suitable repository URL, the tag will throw an error
+during processing.
+
+The generated webR examples will use this URL to install the package
+and load it in the webR REPL. The installation code will look like this:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Install and load webR Package
+install.packages("pkgname", repos = "https://user.github.io/pkgname/")
+library("pkgname")
+
+# Example code:
+your_function()
 }\if{html}{\out{</div>}}
 }
 
