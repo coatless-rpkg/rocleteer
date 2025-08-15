@@ -50,7 +50,7 @@ The generated RD file will have the structure:
 \if{html}{\out{<div class="sourceCode">}}\preformatted{\\section\{WebR\}\{
  \ifelse{html}{
    \out{
-     <a href="webR_URL">\U0001F310 View in webR REPL</a>
+     <div class="rocleteer-webr-container">...</div>
    }
  }{
    \ifelse{latex}{
@@ -78,6 +78,35 @@ The webR integration adapts to different documentation formats:
 \item \strong{LaTeX/PDF}: Plain URL link to webR session
 \item \strong{Other formats}: Informational message about limited support
 }
+}
+
+\section{Styling and Theming}{
+
+
+The webR Section HTML output uses Bootstrap-compatible CSS classes and custom
+properties to link themeing to pkgdown's existing CSS themes. The styles
+follow the CSS custom properties pattern:
+\itemize{
+\item Private variables (\verb{--_*}): Used internally
+\item Public variables (\verb{--rocleteer-webr-*}): For user customization
+\item Bootstrap variables (\verb{--bs-*}): Used as fallbacks
+}
+
+Main CSS classes are:
+\itemize{
+\item \code{.rocleteer-webr-container}: Main container
+\item \code{.rocleteer-webr-warning}: Experimental feature warning
+\item \code{.rocleteer-webr-btn}, \code{.rocleteer-webr-btn-primary}, etc.: Button styling
+}
+
+To customize appearance in pkgdown sites, override CSS custom properties by
+including into a file:
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{.rocleteer-webr-container \{
+  --rocleteer-webr-container-bg: #f0f8ff;
+  --rocleteer-webr-btn-primary-bg: #1976d2;
+\}
+}\if{html}{\out{</div>}}
 }
 
 \section{Parameters}{

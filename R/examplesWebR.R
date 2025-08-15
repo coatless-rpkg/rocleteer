@@ -30,7 +30,7 @@
 #' \section{WebR}{
 #'  \ifelse{html}{
 #'    \out{
-#'      <a href="webR_URL">\U0001F310 View in webR REPL</a>
+#'      <div class="rocleteer-webr-container">...</div>
 #'    }
 #'  }{
 #'    \ifelse{latex}{
@@ -55,6 +55,32 @@
 #' - **HTML**: Interactive buttons/iframes with full webR functionality
 #' - **LaTeX/PDF**: Plain URL link to webR session
 #' - **Other formats**: Informational message about limited support
+#'
+#' @section Styling and Theming:
+#'
+#' The webR Section HTML output uses Bootstrap-compatible CSS classes and custom
+#' properties to link themeing to pkgdown's existing CSS themes. The styles 
+#' follow the CSS custom properties pattern:
+#' 
+#' - Private variables (`--_*`): Used internally
+#' - Public variables (`--rocleteer-webr-*`): For user customization  
+#' - Bootstrap variables (`--bs-*`): Used as fallbacks
+#' 
+#' Main CSS classes are:
+#' 
+#' - `.rocleteer-webr-container`: Main container
+#' - `.rocleteer-webr-warning`: Experimental feature warning
+#' - `.rocleteer-webr-btn`, `.rocleteer-webr-btn-primary`, etc.: Button styling
+#' 
+#' To customize appearance in pkgdown sites, override CSS custom properties by
+#' including into a file:
+#' 
+#' ```css
+#' .rocleteer-webr-container {
+#'   --rocleteer-webr-container-bg: #f0f8ff;
+#'   --rocleteer-webr-btn-primary-bg: #1976d2;
+#' }
+#' ```
 #'
 #' @section Parameters:
 #'
@@ -326,7 +352,7 @@ encode_webr_code <- function(code, filename = "example.R", autorun = FALSE) {
   if (!requireNamespace("base64enc", quietly = TRUE)) {
     stop("Package 'base64enc' is required for @examplesWebR tag")
   }
-    
+  
   # Create the share item structure exactly as webR expects
   share_item <- list(
     list(
@@ -519,6 +545,167 @@ parse_webr_params <- function(tag_line, global_config = list()) {
   return(params)
 }
 
+#' Generate Rocleteer webR CSS styles
+#'
+#' Create the complete CSS for webR components as an inline style block
+#'
+#' @return 
+#' HTML string with complete CSS styles
+#' 
+#' @noRd
+webr_inline_css <- function() {
+  paste0(
+    '<style id="rocleteer-webr-styles">',
+    '/* WebR Interactive Examples CSS - rocleteer package */',
+    '.rocleteer-webr-container {',
+    '  --_container-bg: var(--rocleteer-webr-container-bg, var(--bs-light, #f8f9fa));',
+    '  --_container-border: var(--rocleteer-webr-container-border, var(--bs-border-color, #dee2e6));',
+    '  --_container-border-radius: var(--rocleteer-webr-container-border-radius, var(--bs-border-radius, 8px));',
+    '  --_warning-bg: var(--rocleteer-webr-warning-bg, var(--bs-info-bg-subtle, #e7f3ff));',
+    '  --_warning-border: var(--rocleteer-webr-warning-border, var(--bs-info-border-subtle, #b3d9ff));',
+    '  --_warning-text: var(--rocleteer-webr-warning-text, var(--bs-info-text-emphasis, #0c5aa6));',
+    '  --_btn-primary-bg: var(--rocleteer-webr-btn-primary-bg, var(--bs-primary, #007bff));',
+    '  --_btn-primary-hover: var(--rocleteer-webr-btn-primary-hover, var(--bs-primary-hover, #0056b3));',
+    '  --_btn-success-bg: var(--rocleteer-webr-btn-success-bg, var(--bs-success, #28a745));',
+    '  --_btn-success-hover: var(--rocleteer-webr-btn-success-hover, var(--bs-success-hover, #1e7e34));',
+    '  --_btn-secondary-bg: var(--rocleteer-webr-btn-secondary-bg, var(--bs-secondary, #6c757d));',
+    '  --_btn-secondary-hover: var(--rocleteer-webr-btn-secondary-hover, var(--bs-secondary-hover, #545b62));',
+    '  --_text-color: var(--rocleteer-webr-text-color, var(--bs-body-color, #333));',
+    '  --_text-emphasis: var(--rocleteer-webr-text-emphasis, var(--bs-emphasis-color, #000));',
+    '  --_container-padding: var(--rocleteer-webr-container-padding, 16px);',
+    '  --_container-margin: var(--rocleteer-webr-container-margin, 16px 0);',
+    '  --_btn-padding: var(--rocleteer-webr-btn-padding, 12px 20px);',
+    '  --_btn-margin: var(--rocleteer-webr-btn-margin, 0 8px 0 0);',
+    '  --_font-size: var(--rocleteer-webr-font-size, var(--bs-body-font-size, 14px));',
+    '  --_font-weight-bold: var(--rocleteer-webr-font-weight-bold, var(--bs-font-weight-bold, 700));',
+    '  border: 1px solid var(--_container-border);',
+    '  border-radius: var(--_container-border-radius);',
+    '  padding: var(--_container-padding);',
+    '  margin: var(--_container-margin);',
+    '  background-color: var(--_container-bg);',
+    '  color: var(--_text-color);',
+    '  font-size: var(--_font-size);',
+    '}',
+    '.rocleteer-webr-warning {',
+    '  background-color: var(--_warning-bg);',
+    '  border: 1px solid var(--_warning-border);',
+    '  border-radius: var(--bs-border-radius, 4px);',
+    '  padding: 12px;',
+    '  margin-bottom: 16px;',
+    '  color: var(--_warning-text);',
+    '  font-size: var(--_font-size);',
+    '}',
+    '.rocleteer-webr-warning strong {',
+    '  font-weight: var(--_font-weight-bold);',
+    '}',
+    '.rocleteer-webr-btn {',
+    '  display: inline-block;',
+    '  padding: var(--_btn-padding);',
+    '  margin: var(--_btn-margin);',
+    '  border: none;',
+    '  border-radius: var(--bs-border-radius, 4px);',
+    '  cursor: pointer;',
+    '  text-decoration: none;',
+    '  font-size: var(--_font-size);',
+    '  color: white;',
+    '  transition: background-color 0.15s ease-in-out;',
+    '}',
+    '.rocleteer-webr-btn-primary {',
+    '  background-color: var(--_btn-primary-bg);',
+    '}',
+    '.rocleteer-webr-btn-primary:hover {',
+    '  background-color: var(--_btn-primary-hover);',
+    '  color: white;',
+    '  text-decoration: none;',
+    '}',
+    '.rocleteer-webr-btn-success {',
+    '  background-color: var(--_btn-success-bg);',
+    '}',
+    '.rocleteer-webr-btn-success:hover {',
+    '  background-color: var(--_btn-success-hover);',
+    '}',
+    '.rocleteer-webr-btn-secondary {',
+    '  background-color: var(--_btn-secondary-bg);',
+    '}',
+    '.rocleteer-webr-btn-secondary:hover {',
+    '  background-color: var(--_btn-secondary-hover);',
+    '}',
+    '.rocleteer-webr-initial-text {',
+    '  margin: 8px 0;',
+    '  font-weight: var(--_font-weight-bold);',
+    '  color: var(--_text-emphasis);',
+    '}',
+    '.rocleteer-webr-iframe-container {',
+    '  display: none;',
+    '}',
+    '.rocleteer-webr-container.rocleteer-webr-fullwidth {',
+    '  position: fixed;',
+    '  top: 0;',
+    '  left: 0;',
+    '  width: 100vw;',
+    '  height: 100vh;',
+    '  z-index: var(--rocleteer-webr-fullwidth-z-index, 1050);',
+    '  margin: 0;',
+    '  border-radius: 0;',
+    '  border: none;',
+    '  overflow: auto;',
+    '  background-color: var(--_container-bg);',
+    '  transition: all 0.3s ease-in-out;',
+    '}',
+    '.rocleteer-webr-container.rocleteer-webr-fullwidth .rocleteer-webr-iframe {',
+    '  height: calc(100vh - 180px) !important;',
+    '  border: none;',
+    '}',
+    '.rocleteer-webr-fullwidth-backdrop {',
+    '  position: fixed;',
+    '  top: 0;',
+    '  left: 0;',
+    '  width: 100vw;',
+    '  height: 100vh;',
+    '  background-color: rgba(0, 0, 0, 0.5);',
+    '  z-index: var(--rocleteer-webr-backdrop-z-index, 1040);',
+    '  display: none;',
+    '}',
+    '.rocleteer-webr-iframe-controls {',
+    '  margin-bottom: 12px;',
+    '}',
+    '.rocleteer-webr-iframe-controls .rocleteer-webr-btn {',
+    '  padding: 8px 16px;',
+    '  font-size: var(--_font-size);',
+    '}',
+    '.rocleteer-webr-iframe {',
+    '  width: 100\\%;',
+    '  border: 1px solid var(--_container-border);',
+    '  border-radius: var(--bs-border-radius, 4px);',
+    '}',
+    '@media (max-width: 576px) {',
+    '  .rocleteer-webr-container {',
+    '    --_container-padding: 12px;',
+    '    --_btn-padding: 10px 16px;',
+    '    --_font-size: 13px;',
+    '  }',
+    '  .rocleteer-webr-btn {',
+    '    display: block;',
+    '    margin: 4px 0;',
+    '    text-align: center;',
+    '  }',
+    '  .rocleteer-webr-iframe-controls .rocleteer-webr-btn {',
+    '    display: inline-block;',
+    '    margin: 0 4px 0 0;',
+    '    font-size: 12px;',
+    '    padding: 6px 12px;',
+    '  }',
+    '  .rocleteer-webr-container.rocleteer-webr-fullwidth {',
+    '    padding: 8px;',
+    '  }',
+    '  .rocleteer-webr-container.rocleteer-webr-fullwidth .rocleteer-webr-iframe {',
+    '    height: calc(100vh - 120px) !important;',
+    '  }',
+    '}',
+    '</style>'
+  )
+}
+
 #' Generate webR warning HTML
 #'
 #' Create standardized warning message for webR examples
@@ -529,7 +716,7 @@ parse_webr_params <- function(tag_line, global_config = list()) {
 #' @noRd
 webr_experimental_warning <- function() {
   paste0(
-    '<div class="webr-warning" style="background-color: #e7f3ff; border: 1px solid #b3d9ff; border-radius: 4px; padding: 12px; margin-bottom: 16px; font-size: 14px; color: #0c5aa6;">',
+    '<div class="rocleteer-webr-warning">',
     '<strong>\U0001F9EA Experimental:</strong> Interactive webR examples are a new feature. ',
     'Loading may take a moment, and the package version might differ from this documentation.',
     '</div>'
@@ -590,15 +777,17 @@ webr_repl_href <- function(encoded_code, version = "latest", mode = "", channel 
 webr_repl_link <- function(encoded_code, version = "latest", mode = "", channel = "") {
   url <- webr_repl_href(encoded_code, version, mode, channel)
   html <- paste0(
-    '<div class="webr-container" style="border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin: 16px 0; background-color: #f8f9fa;">',
+    # Include CSS
+    # TODO: Figure out how to include it once? Post parser re-write?
+    webr_inline_css(),
+    
+    '<div class="rocleteer-webr-container">',
     
     # Warning message
     webr_experimental_warning(),
     
     # Link button
-    '<p><a href="', url, '" target="_blank" ',
-    'style="background-color: #007bff; color: white; padding: 12px 20px; ',
-    'text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-block;">',
+    '<p><a href="', url, '" target="_blank" class="rocleteer-webr-btn rocleteer-webr-btn-primary">',
     '\U0001F310 View in webR REPL</a></p>',
     
     '</div>'
@@ -622,60 +811,104 @@ webr_repl_link <- function(encoded_code, version = "latest", mode = "", channel 
 #' @noRd
 webr_repl_iframe <- function(encoded_code, version = "latest", height = 300, mode = "", channel = "") {
   url <- webr_repl_href(encoded_code, version, mode, channel)
-
+  
   # Create an ID for this iframe (based on the encoded code)
   hashed_id <- abs(sum(utf8ToInt(substr(encoded_code, 1, 10))))
   iframe_id <- paste0("webr_iframe_", hashed_id)
   
   html <- paste0(
-    '<div class="webr-container" style="border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin: 16px 0; background-color: #f8f9fa;">',
+    # Include CSS once
+    webr_inline_css(),
+    
+    '<div class="rocleteer-webr-container">',
     
     # Warning message
     webr_experimental_warning(),
     
     # Initial buttons (before iframe loads)
-    '<div id="', iframe_id, '_initial" class="webr-initial">',
-    '<p style="margin: 8px 0; font-weight: bold; color: #333;">Interactive Example Available</p>',
-    '<button onclick="loadWebRIframe(\'', iframe_id, '\', \'', url, '\', ', height, ')" ',
-    'style="background-color: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 4px; ',
-    'cursor: pointer; font-size: 14px; margin-right: 8px;">',
+    '<div id="', iframe_id, '_initial" class="rocleteer-webr-initial">',
+    '<p class="rocleteer-webr-initial-text">Interactive Example Available</p>',
+    '<button onclick="loadWebRIframe(\'', iframe_id, '\', \'', url, '\', ', height, ', false)" ',
+    'class="rocleteer-webr-btn rocleteer-webr-btn-success rocleteer-webr-btn-try">',
     '\U0001F680 Try it in your browser</button>',
     '<button onclick="window.open(\'', url, '\', \'_blank\')" ',
-    'style="background-color: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 4px; ',
-    'cursor: pointer; font-size: 14px;">',
+    'class="rocleteer-webr-btn rocleteer-webr-btn-primary rocleteer-webr-btn-open">',
     '\U0001F310 Open in Tab</button>',
     '</div>',
     
     # Iframe container (hidden initially)
-    '<div id="', iframe_id, '_container" class="webr-iframe-container" style="display: none;">',
-    '<div style="margin-bottom: 12px;">',
+    '<div id="', iframe_id, '_container" class="rocleteer-webr-iframe-container">',
+    '<div class="rocleteer-webr-iframe-controls">',
     '<button onclick="hideWebRIframe(\'', iframe_id, '\')" ',
-    'style="background-color: #6c757d; color: white; padding: 8px 16px; border: none; border-radius: 4px; ',
-    'cursor: pointer; font-size: 14px; margin-right: 8px;">',
+    'class="rocleteer-webr-btn rocleteer-webr-btn-secondary rocleteer-webr-btn-back">',
     '\U0001F519 Go back</button>',
+    '<button onclick="toggleWebRFullWidth(\'', iframe_id, '\')" ',
+    'class="rocleteer-webr-btn rocleteer-webr-btn-primary rocleteer-webr-btn-toggle" ',
+    'id="', iframe_id, '_toggle">',
+    '\U00026F6 Full Screen</button>',
     '<button onclick="window.open(\'', url, '\', \'_blank\')" ',
-    'style="background-color: #007bff; color: white; padding: 8px 16px; border: none; border-radius: 4px; ',
-    'cursor: pointer; font-size: 14px;">',
+    'class="rocleteer-webr-btn rocleteer-webr-btn-primary rocleteer-webr-btn-open">',
     '\U0001F310 Open in Tab</button>',
     '</div>',
-    '<div id="', iframe_id, '_content"></div>',
+    '<div id="', iframe_id, '_content" class="rocleteer-webr-iframe-content"></div>',
     '</div>',
     
     '</div>',
     
     # JavaScript for iframe management
     '<script>',
-    'function loadWebRIframe(id, url, height) {',
+    'function loadWebRIframe(id, url, height, fullwidth) {',
+    '  fullwidth = fullwidth || false;',
     '  document.getElementById(id + "_initial").style.display = "none";',
     '  document.getElementById(id + "_container").style.display = "block";',
     '  document.getElementById(id + "_content").innerHTML = ',
-    '    \'<iframe src="\' + url + \'" width="100\\%" height="\' + height + \'px" \' +',
-    '    \'style="border: 1px solid #ddd; border-radius: 4px;" title="webR REPL"></iframe>\';',
+    '    \'<iframe src="\' + url + \'" class="rocleteer-webr-iframe" height="\' + height + \'px" \' +',
+    '    \'title="webR REPL"></iframe>\';',
+    '  if (fullwidth) {',
+    '    enterWebRFullWidth(id);',
+    '  }',
     '}',
     'function hideWebRIframe(id) {',
+    '  exitWebRFullWidth(id);',
     '  document.getElementById(id + "_initial").style.display = "block";',
     '  document.getElementById(id + "_container").style.display = "none";',
     '  document.getElementById(id + "_content").innerHTML = "";',
+    '}',
+    'function toggleWebRFullWidth(id) {',
+    '  var container = document.getElementById(id + "_container").closest(".rocleteer-webr-container");',
+    '  if (container.classList.contains("rocleteer-webr-fullwidth")) {',
+    '    exitWebRFullWidth(id);',
+    '  } else {',
+    '    enterWebRFullWidth(id);',
+    '  }',
+    '}',
+    'function enterWebRFullWidth(id) {',
+    '  var container = document.getElementById(id + "_container").closest(".rocleteer-webr-container");',
+    '  var backdrop = document.createElement("div");',
+    '  backdrop.className = "rocleteer-webr-fullwidth-backdrop";',
+    '  backdrop.id = id + "_backdrop";',
+    '  backdrop.onclick = function() { exitWebRFullWidth(id); };',
+    '  document.body.appendChild(backdrop);',
+    '  backdrop.style.display = "block";',
+    '  container.classList.add("rocleteer-webr-fullwidth");',
+    '  document.body.style.overflow = "hidden";',
+    '  var toggleBtn = document.getElementById(id + "_toggle");',
+    '  if (toggleBtn) {',
+    '    toggleBtn.innerHTML = "\\u274C Exit Full Screen";',
+    '  }',
+    '}',
+    'function exitWebRFullWidth(id) {',
+    '  var container = document.getElementById(id + "_container").closest(".rocleteer-webr-container");',
+    '  var backdrop = document.getElementById(id + "_backdrop");',
+    '  if (backdrop) {',
+    '    backdrop.remove();',
+    '  }',
+    '  container.classList.remove("rocleteer-webr-fullwidth");',
+    '  document.body.style.overflow = "";',
+    '  var toggleBtn = document.getElementById(id + "_toggle");',
+    '  if (toggleBtn) {',
+    '    toggleBtn.innerHTML = "\\u26F6 Full width";',
+    '  }',
     '}',
     '</script>'
   )
