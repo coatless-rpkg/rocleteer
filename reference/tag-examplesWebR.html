@@ -87,7 +87,7 @@ for sharing.</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>\section{WebR}{</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a> \ifelse{html}{</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>   \out{</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>     <span class="sc">&lt;</span>a href<span class="ot">=</span><span class="st">"webR_URL"</span><span class="sc">&gt;</span>\U0001F310 View <span class="cf">in</span> webR REPL<span class="sc">&lt;</span><span class="er">/</span>a<span class="sc">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>     <span class="sc">&lt;</span>div class<span class="ot">=</span><span class="st">"rocleteer-webr-container"</span><span class="sc">&gt;</span>...<span class="sc">&lt;</span><span class="er">/</span>div<span class="sc">&gt;</span></span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>   }</span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a> }{</span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>   \ifelse{latex}{</span>
@@ -112,6 +112,26 @@ for sharing.</p>
 <li><p><strong>LaTeX/PDF</strong>: Plain URL link to webR session</p></li>
 <li><p><strong>Other formats</strong>: Informational message about limited support</p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="styling-and-theming">Styling and Theming<a class="anchor" aria-label="anchor" href="#styling-and-theming"></a></h2>
+
+
+
+<p>The webR Section HTML output uses Bootstrap-compatible CSS classes and custom
+properties to link themeing to pkgdown's existing CSS themes. The styles
+follow the CSS custom properties pattern:</p><ul><li><p>Private variables (<code>--_*</code>): Used internally</p></li>
+<li><p>Public variables (<code>--rocleteer-webr-*</code>): For user customization</p></li>
+<li><p>Bootstrap variables (<code>--bs-*</code>): Used as fallbacks</p></li>
+</ul><p>Main CSS classes are:</p><ul><li><p><code>.rocleteer-webr-container</code>: Main container</p></li>
+<li><p><code>.rocleteer-webr-warning</code>: Experimental feature warning</p></li>
+<li><p><code>.rocleteer-webr-btn</code>, <code>.rocleteer-webr-btn-primary</code>, etc.: Button styling</p></li>
+</ul><p>To customize appearance in pkgdown sites, override CSS custom properties by
+including into a file:</p>
+<p></p><div class="sourceCode css"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">.rocleteer-webr-container</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="va">--rocleteer-webr-container-bg</span><span class="ch">:</span> <span class="cn">#f0f8ff</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="va">--rocleteer-webr-btn-primary-bg</span><span class="ch">:</span> <span class="cn">#1976d2</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>}</span></code></pre><p></p></div>
+    </div>
     <div class="section level2">
     <h2 id="parameters">Parameters<a class="anchor" aria-label="anchor" href="#parameters"></a></h2>
 
